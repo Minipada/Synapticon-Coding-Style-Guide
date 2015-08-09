@@ -361,19 +361,19 @@ Unnamed Namespaces
 ~~~~~~~~~~~~~~~~~~
 
 -  Unnamed namespaces are allowed and even encouraged in .cpp files, to
-   avoid link time naming conflicts:
--  namespace {                           // This is in a .cpp file.
--  
--  // The content of a namespace is not indented.
--  //
--  // This function is guaranteed not to generate a colliding symbol
--  // with other symbols at link time, and is only visible to
--  // callers in this .cpp file.
--  bool UpdateInternals(Frobber\* f, int newval) {
--    ...
--  }
--  
--  }  // namespace
+   avoid link time naming conflicts::
+        namespace {                           // This is in a .cpp file.
+        
+        // The content of a namespace is not indented.
+        //
+        // This function is guaranteed not to generate a colliding symbol
+        // with other symbols at link time, and is only visible to
+        // callers in this .cpp file.
+        bool UpdateInternals(Frobber\* f, int newval) {
+          ...
+        }
+        
+        }  // namespace
 
 However, file-scope declarations that are associated with a particular
 class may be declared in that class as types, static data members or
@@ -388,54 +388,58 @@ Named namespaces should be used as follows:
 
 -  Namespaces wrap the entire source file after includes,gflags
    definitions/declarations, and forward declarations of classes from
-   other namespaces:
--  // In the .h file
--  namespace mynamespace {
--  
--  // All declarations are within the namespace scope.
--  // Notice the lack of indentation.
--  class MyClass {
--   public:
--    ...
--    void Foo();
--  };
--  
--  }  // namespace mynamespace
--  // In the .cpp file
--  namespace mynamespace {
--  
--  // Definition of functions is within scope of the namespace.
--  void MyClass::Foo() {
--    ...
--  }
--  
--  }  // namespace mynamespace
+   other namespaces::
+
+        // In the .h file
+        namespace mynamespace {
+
+        // All declarations are within the namespace scope.
+        // Notice the lack of indentation.
+        class MyClass {
+         public:
+          ...
+          void Foo();
+        };
+
+        }  // namespace mynamespace
+        // In the .cpp file
+        namespace mynamespace {
+
+        // Definition of functions is within scope of the namespace.
+        void MyClass::Foo() {
+          ...
+        }
+
+        }  // namespace mynamespace
 
 The typical .cpp file might have more complex detail, including the need
 to reference classes in other namespaces.
 
-#include "a.h"
+::
+        #include "a.h"
 
-DEFINE\_bool(someflag, false, "dummy flag");
+        DEFINE\_bool(someflag, false, "dummy flag");
 
-class C;  // Forward declaration of class C in the global namespace.
+        class C;  // Forward declaration of class C in the global namespace.
 
-namespace a { class A; }  // Forward declaration of a::A.
+        namespace a { class A; }  // Forward declaration of a::A.
 
-namespace b {
+        namespace b {
 
-...code for b...         // Code goes against the left margin.
+        ...code for b...         // Code goes against the left margin.
 
-}  // namespace b
+        }  // namespace b
 
 -  You may use a using-declaration anywhere in a .cpp file, and in
    functions, methods or classes in .h files.
 
-// OK in .cpp files.
+::
 
-// Must be in a function, method or class in .h files.
+        // OK in .cpp files.
 
-using ::foo::bar;
+        // Must be in a function, method or class in .h files.
+
+        using ::foo::bar;
 
 -  Do not use inline namespaces.
 
@@ -457,19 +461,21 @@ declaration and see what type the variable is and what it was
 initialized to. In particular, initialization should be used instead of
 declaration and assignment, e.g.:
 
-int i;
+::
 
-i = f();      // Bad -- initialization separate from declaration.
+        int i;
 
-int j = g();  // Good -- declaration has initialization.
+        i = f();      // Bad -- initialization separate from declaration.
 
-vector<int> v;
+        int j = g();  // Good -- declaration has initialization.
 
-v.push\_back(1);  // Prefer initializing using brace initialization.
+        vector<int> v;
 
-v.push\_back(2);
+        v.push\_back(1);  // Prefer initializing using brace initialization.
 
-vector<int> v = {1, 2};  // Good -- v starts initialized.
+        v.push\_back(2);
+
+        vector<int> v = {1, 2};  // Good -- v starts initialized.
 
 Static and Global Variables
 ---------------------------
@@ -519,41 +525,43 @@ Delegating and Inheriting Constructors
 Use delegating and inheriting constructors when they reduce code
 duplication.
 
-X::X(const string& name)
+::
 
-: name\_(name)
+        X::X(const string& name)
 
-, var\_name(var)
+        : name\_(name)
 
-{
+        , var\_name(var)
 
-  ...
+        {
 
-}
+          ...
 
-X::X() : X("") { }
+        }
 
-class Base {
+        X::X() : X("") { }
 
- public:
+        class Base {
 
-  Base();
+         public:
 
-  Base(int n);
+          Base();
 
-  Base(const string& s);
+          Base(int n);
 
-  ...
+          Base(const string& s);
 
-};
+          ...
 
-class Derived : public Base {
+        };
 
- public:
+        class Derived : public Base {
 
-  using Base::Base;  // Base's constructors are redeclared here.
+         public:
 
-};
+          using Base::Base;  // Base's constructors are redeclared here.
+
+        };
 
 Structs vs. Classes
 -------------------
@@ -618,24 +626,26 @@ code immediately understandable by a new reader. Do not use
 abbreviations that are ambiguous or unfamiliar to readers outside your
 project, and do not abbreviate by deleting letters within a word.
 
-int price\_count\_reader;    // No abbreviation.
+::
 
-int num\_errors;            // "num" is a widespread convention.
+        int price\_count\_reader;    // No abbreviation.
 
-int num\_dns\_connections;   // Most people know what "DNS" stands for.
+        int num\_errors;            // "num" is a widespread convention.
 
-int n;                     // Meaningless.
+        int num\_dns\_connections;   // Most people know what "DNS" stands for.
 
-int nerr;                  // Ambiguous abbreviation.
+        int n;                     // Meaningless.
 
-int n\_comp\_conns;          // Ambiguous abbreviation.
+        int nerr;                  // Ambiguous abbreviation.
 
-int wgc\_connections;       // Only your group knows what this stands
-for.
+        int n\_comp\_conns;          // Ambiguous abbreviation.
 
-int pc\_reader;             // Lots of things can be abbreviated "pc".
+        int wgc\_connections;       // Only your group knows what this stands
+        for.
 
-int cstmr\_id;              // Deletes internal letters.
+        int pc\_reader;             // Lots of things can be abbreviated "pc".
+
+        int cstmr\_id;              // Deletes internal letters.
 
 File Names
 ----------
@@ -672,21 +682,23 @@ the same naming convention. Type names should start with a capital
 letter and have a capital letter for each new word. No underscores. For
 example:
 
-// classes and structs
+::
 
-class UrlTable { ...
+        // classes and structs
 
-class UrlTableTester { ...
+        class UrlTable { ...
 
-struct UrlTableProperties { ...
+        class UrlTableTester { ...
 
-// typedefs
+        struct UrlTableProperties { ...
 
-typedef hash\_map<UrlTableProperties \*, string> PropertiesMap;
+        // typedefs
 
-// enums
+        typedef hash\_map<UrlTableProperties \*, string> PropertiesMap;
 
-enum UrlTableErrors { ...
+        // enums
+
+        enum UrlTableErrors { ...
 
 Variable Names
 --------------
@@ -696,13 +708,13 @@ underscores between words. Data members of classes (but not structs)
 additionally have trailing underscores. For instance:
 a\_local\_variable, a\_struct\_data\_member, a\_class\_data\_member\_.
 
-For example:
+For example::
 
-string table\_name;  // OK - uses underscore.
+        string table\_name;  // OK - uses underscore.
 
-string tablename;   // OK - all lowercase.
+        string tablename;   // OK - all lowercase.
 
-string tableName;   // Bad - mixed case.
+        string tableName;   // Bad - mixed case.
 
 Class Data Members
 ------------------
@@ -710,19 +722,21 @@ Class Data Members
 Data members of classes, both static and non-static, are named like
 ordinary nonmember variables, but with a trailing underscore.
 
-class TableInfo {
+::
 
-  ...
+        class TableInfo {
 
- private:
+          ...
 
-  string table\_name\_;  // OK - underscore at end.
+         private:
 
-  string tablename\_;   // OK.
+          string table\_name\_;  // OK - underscore at end.
 
-  static Pool<TableInfo>\* pool\_;  // OK.
+          string tablename\_;   // OK.
 
-};
+          static Pool<TableInfo>\* pool\_;  // OK.
+
+        };
 
 Struct Data Members
 -------------------
@@ -731,15 +745,17 @@ Data members of structs, both static and non-static, are named like
 ordinary nonmember variables. They do not have the trailing underscores
 that data members in classes have.
 
-struct UrlTableProperties {
+::
 
-  string name;
+        struct UrlTableProperties {
 
-  int num\_entries;
+          string name;
 
-  static Pool<UrlTableProperties>\* pool;
+          int num\_entries;
 
-};
+          static Pool<UrlTableProperties>\* pool;
+
+        };
 
 Global Variables
 ----------------
@@ -756,7 +772,9 @@ or within a class.
 
 Separate word by \_ underscore:
 
-const int DAYS\_IN\_WEEK = 7;
+::
+
+        const int DAYS\_IN\_WEEK = 7;
 
 Regular Functions
 ~~~~~~~~~~~~~~~~~
@@ -771,17 +789,19 @@ normal operation.
 
 C++
 
-addTableEntry()
+::
 
-deleteUrl()
-
-openFileOrDie()
+        addTableEntry()
+        deleteUrl()
+        openFileOrDie()
 
 C
 
-add\_table\_entry()
-delete\_url()
-open\_file\_or\_die()
+::
+
+        add\_table\_entry()
+        delete\_url()
+        open\_file\_or\_die()
 
 Accessors and Mutators
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -790,24 +810,26 @@ Accessors and mutators (get and set functions) should match the name of
 the variable they are getting and setting. This shows an excerpt of a
 class whose instance variable is num\_entries\_.
 
-class MyClass {
+::
 
- public:
+        class MyClass {
 
-  ...
+         public:
 
-  int getNumEntries() const { return num\_entries\_; }
+          ...
 
-  void setNumEntries(int num\_entries) { num\_entries\_ = num\_entries;
-}
+          int getNumEntries() const { return num\_entries\_; }
 
-  bool isActive()
+          void setNumEntries(int num\_entries) { num\_entries\_ = num\_entries;
+        }
 
- private:
+          bool isActive()
 
-  int num\_entries\_;
+         private:
 
-};
+          int num\_entries\_;
+
+        };
 
 You may also use lowercase letters for other very short inlined
 functions. For example if a function were so cheap you would not cache
@@ -820,9 +842,11 @@ Macro Names
 In general macros should not be used. However, if they are absolutely
 needed, then they should be named with all capitals and underscores.
 
-#define ROUND(x) ...
+::
 
-#define PI\_ROUNDED 3.0
+        #define ROUND(x) ...
+
+        #define PI\_ROUNDED 3.0
 
 --------------
 
@@ -851,19 +875,21 @@ Explanatory Comments
 Tricky or complicated code blocks should have comments before them.
 Example:
 
-// Divide result by two, taking into account that x
+::
 
-// contains the carry from the add.
+        // Divide result by two, taking into account that x
 
-for (int i = 0; i < result->size(); i++) {
+        // contains the carry from the add.
 
-  x = (x << 8) + (\*result)[i];
+        for (int i = 0; i < result->size(); i++) {
 
-  (\*result)[i] = x >> 1;
+          x = (x << 8) + (\*result)[i];
 
-  x &= 1;
+          (\*result)[i] = x >> 1;
 
-}
+          x &= 1;
+
+        }
 
 nullptr/NULL, true/false, 1, 2, 3...
 ------------------------------------
@@ -873,53 +899,52 @@ functions, you should consider adding a comment about what they are, or
 make your code self-documenting by using constants. For example,
 compare:
 
-bool success = CalculateSomething(interesting\_value,
+::
 
-                                  10,
+        bool success = CalculateSomething(interesting\_value,
 
-                                  false,
+                                          10,
 
-                                  NULL);  // What are these arguments??
+                                          false,
 
-versus:
+                                          NULL);  // What are these arguments??
 
-bool success = CalculateSomething(interesting\_value,
+versus::
 
-                                  10,     // Default base value.
+        bool success = CalculateSomething(interesting\_value,
 
-                                  false,  // Not the first time we're
-calling this.
+                                          10,     // Default base value.
 
-                                  NULL);  // No callback.
+                                          false,  // Not the first time we're calling this.
 
-Or alternatively, constants or self-describing variables:
+                                          NULL);  // No callback.
 
-const int kDefaultBaseValue = 10;
+Or alternatively, constants or self-describing variables::
 
-const bool kFirstTimeCalling = false;
+        const int kDefaultBaseValue = 10;
+        const bool kFirstTimeCalling = false;
+        Callback \*null\_callback = NULL;
 
-Callback \*null\_callback = NULL;
+        bool success = CalculateSomething(interesting\_value,
 
-bool success = CalculateSomething(interesting\_value,
+                                          kDefaultBaseValue,
 
-                                  kDefaultBaseValue,
+                                          kFirstTimeCalling,
 
-                                  kFirstTimeCalling,
-
-                                  null\_callback);
+                                          null\_callback);
 
 Don'ts
 ------
 
 Note that you should never describe the code itself. Assume that the
 person reading the code knows C++ better than you do, even though he or
-she does not know what you are trying to do:
+she does not know what you are trying to do::
 
-// Now go through the b array and make sure that if i occurs,
+        // Now go through the b array and make sure that if i occurs,
 
-// the next element is i+1.
+        // the next element is i+1.
 
-...        // Geez.  What a useless comment.
+        ...        // Geez.  What a useless comment.
 
 --------------
 
@@ -954,66 +979,64 @@ Return type on the same line as function name, parameters on the same
 line if they fit. Wrap parameter lists which do not fit on a single line
 as you would wrap arguments in a function call.
 
-Functions look like this:
+Functions look like this::
 
-ReturnType ClassName::FunctionName(Type par\_name1, Type par\_name2)
+        ReturnType ClassName::FunctionName(Type par\_name1, Type par\_name2)
+        {
 
-{
+          DoSomething();
 
-  DoSomething();
+          ...
 
-  ...
+        }
 
-}
+If you have too much text to fit on one line::
 
-If you have too much text to fit on one line:
+        ReturnType ClassName::ReallyLongFunctionName(Type par\_name1,
 
-ReturnType ClassName::ReallyLongFunctionName(Type par\_name1,
+                                                     Type par\_name2,
 
-                                             Type par\_name2,
+                                                     Type par\_name3)
 
-                                             Type par\_name3)
+        {
 
-{
+          DoSomething();
 
-  DoSomething();
+          ...
 
-  ...
-
-}
+        }
 
 If some parameters are unused, comment out the variable name in the
-function definition:
+function definition::
 
-// Always have named parameters in interfaces.
+        // Always have named parameters in interfaces.
 
-class Shape {
+        class Shape {
 
- public:
+         public:
 
-  virtual void Rotate(double radians) = 0;
+          virtual void Rotate(double radians) = 0;
 
-};
+        };
 
-// Always have named parameters in the declaration.
+        // Always have named parameters in the declaration.
 
-class Circle : public Shape {
+        class Circle : public Shape {
 
- public:
+         public:
 
-  virtual void Rotate(double radians);
+          virtual void Rotate(double radians);
 
-};
+        };
 
-// Comment out unused named parameters in definitions.
+        // Comment out unused named parameters in definitions.
 
-void Circle::Rotate(double /\*radians\*/) {}
+        void Circle::Rotate(double /\*radians\*/) {}
 
-// Bad - if someone wants to implement later, it's not clear what the
+        // Bad - if someone wants to implement later, it's not clear what the
+        // variable means.
 
-// variable means.
-
-void Circle::Rotate(double) {}
+        void Circle::Rotate(double) {}
 
 Function Calls
 --------------
@@ -1024,38 +1047,38 @@ spaces and continue at that 4 space indent. In the absence of other
 considerations, use the minimum number of lines, including placing
 multiple arguments on each line where appropriate.
 
-Function calls have the following format:
+Function calls have the following format::
 
-bool retval = DoSomething(argument1, argument2, argument3);
+        bool retval = DoSomething(argument1, argument2, argument3);
 
 If the arguments do not all fit on one line, they should be broken up
 onto multiple lines, with each subsequent line aligned with the first
 argument. Do not add spaces after the open paren or before the close
-paren:
+paren::
 
-bool retval = DoSomething(averyveryveryverylongargument1,
+        bool retval = DoSomething(averyveryveryverylongargument1,
 
-                          argument2,
+                                  argument2,
 
-                          argument3);
+                                  argument3);
 
-Arguments may optionally all be placed on subsequent linesif (...) {
+Arguments may optionally all be placed on subsequent lines ``if (...) {``
 
-  ...
+::
 
-  ...
+          ...
 
-  if (...) {
+          if (...) {
 
-    DoSomething(argument1,
+            DoSomething(argument1,
 
-                argument2,
+                        argument2,
 
-                argument3,
+                        argument3,
 
-                argument4);
+                        argument4);
 
-  }
+          }
 
 Put multiple arguments on a single line to reduce the number of lines
 necessary for calling a function unless there is a specific readability
@@ -1068,19 +1091,17 @@ techniques.
 If having multiple arguments in a single line decreases readability due
 to the complexity or confusing nature of the expressions that make up
 some arguments, try creating variables that capture those arguments in a
-descriptive name:
+descriptive name::
 
-int my\_heuristic = scores[x] \* y + bases[x];
+        int my\_heuristic = scores[x] \* y + bases[x];
 
-bool retval = DoSomething(my\_heuristic, x, y, z);
+        bool retval = DoSomething(my\_heuristic, x, y, z);
 
 Or put the confusing argument on its own line with an explanatory
-comment:
+comment::
 
-bool retval = DoSomething(scores[x] \* y + bases[x],  // Score
-heuristic.
-
-                          x, y, z);
+        bool retval = DoSomething(scores[x] \* y + bases[x],  // Score heuristic.
+                                  x, y, z);
 
 If there is still a case where one argument is significantly more
 readable on its own line, then put it on its own line. The decision
@@ -1089,15 +1110,15 @@ than a general policy.
 
 Sometimes arguments form a structure that is important for readability.
 In those cases, feel free to format the arguments according to that
-structure:
+structure::
 
-// Transform the widget by a 3x3 matrix.
+        // Transform the widget by a 3x3 matrix.
 
-my\_widget.Transform(x1, x2, x3,
+        my\_widget.Transform(x1, x2, x3,
 
-                    y1, y2, y3,
+                            y1, y2, y3,
 
-                    z1, z2, z3);
+                            z1, z2, z3);
 
 Conditionals
 ------------
@@ -1115,20 +1136,21 @@ present. If you are writing new code, use the format that the other
 files in that directory or project use. If in doubt and you have no
 personal preference, do not add the spaces.
 
-if (condition) {  // no spaces inside parentheses
+::
 
-  ...  // 2 space indent.
+        if (condition) {  // no spaces inside parentheses
 
-} else if (...) {  // The else goes on the same line as the closing
-brace.
+          ...  // 2 space indent.
 
-  ...
+        } else if (...) {  // The else goes on the same line as the closing brace.
 
-} else {
+          ...
 
-  ...
+        } else {
 
-}
+          ...
+
+        }
 
 --------------
 
@@ -1136,29 +1158,33 @@ Note that in all cases you must have a space between the if and the open
 parenthesis. You must also have a space between the close parenthesis
 and the curly brace, if you're using one.
 
-if(condition) {   // Bad - space missing after IF.
+::
 
-if (condition){   // Bad - space missing before {.
+        if(condition) {   // Bad - space missing after IF.
 
-if(condition){    // Doubly bad.
+        if (condition){   // Bad - space missing before {.
 
-if (condition) {  // Good - proper space after IF and before {.
+        if(condition){    // Doubly bad.
+
+        if (condition) {  // Good - proper space after IF and before {.
 
 Short conditional statements may be written on one line if this enhances
 readability. You may use this only when the line is brief and the
 statement does not use the else clause.
 
-if (x == kFoo) return new Foo();
+::
 
-if (x == kBar) return new Bar();
+        if (x == kFoo) return new Foo();
 
-This is not allowed when the if statement has an else:
+        if (x == kBar) return new Bar();
 
-// Not allowed - IF statement on one line when there is an ELSE clause
+        This is not allowed when the if statement has an else:
 
-if (x) DoThis();
+        // Not allowed - IF statement on one line when there is an ELSE clause
 
-else DoThat();
+        if (x) DoThis();
+
+        else DoThat();
 
 In general, curly braces are not required for single-line statements,
 but they are allowed if you like them; conditional or loop statements
@@ -1166,54 +1192,37 @@ with complex conditions or statements may be more readable with curly
 braces. Some projects require that an if must always always have an
 accompanying brace.
 
-if (condition)
+::
 
-  DoSomething();  // 2 space indent.   // NOT ALLOWED!!! bitchy.
-
-if (condition) {
-
-  DoSomething();  // 2 space indent.
-
-}
+        if (condition)
+          DoSomething();  // 2 space indent.   // NOT ALLOWED!!! bitchy.
+        if (condition) {
+          DoSomething();  // 2 space indent.
+        }
 
 However, if one part of an if-else statement uses curly braces, the
-other part must too:
+other part must too::
 
-// Not allowed - curly on IF but not ELSE
+        // Not allowed - curly on IF but not ELSE
+        if (condition) {
+          foo;
+        } else
+          bar;
 
-if (condition) {
+        // Not allowed - curly on ELSE but not IF
+        if (condition)
+          foo;
+        else {
+          bar;
+        }
 
-  foo;
-
-} else
-
-  bar;
-
-// Not allowed - curly on ELSE but not IF
-
-if (condition)
-
-  foo;
-
-else {
-
-  bar;
-
-}
-
-// Curly braces around both IF and ELSE required because
-
-// one of the clauses used braces.
-
-if (condition) {
-
-  foo;
-
-} else {
-
-  bar;
-
-}
+        // Curly braces around both IF and ELSE required because
+        // one of the clauses used braces.
+        if (condition) {
+          foo;
+        } else {
+          bar;
+        }
 
 Loops and Switch Statements
 ---------------------------
@@ -1229,59 +1238,51 @@ as shown below.
 If not conditional on an enumerated value, switch statements should
 always have a default case (in the case of an enumerated value, the
 compiler will warn you if any values are not handled). If the default
-case should never execute, simply assert:
+case should never execute, simply assert::
 
-switch (var) {
+        switch (var) {
+          case 0: {  // 2 space indent
+            ...      // 4 space indent
+            break;
+          }
 
-  case 0: {  // 2 space indent
+          case 1: {
+            ...
+            break;
+          }
 
-    ...      // 4 space indent
-
-    break;
-
-  }
-
-  case 1: {
-
-    ...
-
-    break;
-
-  }
-
-  default: {
-
-    assert(false);
-
-  }
-
-}
+          default: {
+            assert(false);
+          }
+        }
 
 Braces are NOT(!) optional for single-statement loops.
 
-for (int i = 0; i < kSomeNumber; ++i)
+::
 
-  printf("I love you\\n");
+        for (int i = 0; i < kSomeNumber; ++i)
 
-for (int i = 0; i < kSomeNumber; ++i) {
+          printf("I love you\\n");
 
-  printf("I take it back\\n");
+        for (int i = 0; i < kSomeNumber; ++i) {
 
-}
+          printf("I take it back\\n");
+
+        }
 
 Empty loop bodies should use {} or continue, but not a single semicolon.
 
-while (condition) {
+::
 
-  // Repeat test until it returns false.
+        while (condition) {
+          // Repeat test until it returns false.
+        }
 
-}
+        for (int i = 0; i < kSomeNumber; ++i) {}  // Good - empty body.
 
-for (int i = 0; i < kSomeNumber; ++i) {}  // Good - empty body.
+        while (condition) continue; // Bad - continue indicates no logic.
 
-while (condition) continue; // Bad - continue indicates no logic.
-
-while (condition);  // Bad - looks like part of do/while loop.
+        while (condition);  // Bad - looks like part of do/while loop.
 
 Pointer and Reference Expressions
 ---------------------------------
@@ -1290,15 +1291,15 @@ No spaces around period or arrow. Pointer operators do not have trailing
 spaces.
 
 The following are examples of correctly-formatted pointer and reference
-expressions:
+expressions::
 
-x = \*p;
+        x = \*p;
 
-p = &x;
+        p = &x;
 
-x = r.y;
+        x = r.y;
 
-x = r->y;
+        x = r->y;
 
 Note that:
 
@@ -1307,23 +1308,23 @@ Note that:
 -  Pointer operators have no space after the \* or &.
 
 When declaring a pointer variable or argument, you may place the
-asterisk adjacent to either the type or to the variable name:
+asterisk adjacent to either the type or to the variable name::
 
-// These are fine, space preceding.
+        // These are fine, space preceding.
 
-char \*c;
+        char \*c;
 
-const string &str;
+        const string &str;
 
-// These are not fine, space following.
+        // These are not fine, space following.
 
-char\* c;    // but remember to do "char\* c, \*d, \*e, ...;"!
+        char\* c;    // but remember to do "char\* c, \*d, \*e, ...;"!
 
-const string& str;
+        const string& str;
 
-char \* c;  // Bad - spaces on both sides of \*
+        char \* c;  // Bad - spaces on both sides of \*
 
-const string & str;  // Bad - spaces on both sides of &
+        const string & str;  // Bad - spaces on both sides of &
 
 You should do this consistently within a single file, so, when modifying
 an existing file, use the style in that file.
@@ -1335,17 +1336,13 @@ When you have a boolean expression that is longer than the standard line
 length, be consistent in how you break up the lines.
 
 In this example, the logical AND operator is always at the end of the
-lines:
+lines::
 
-if (this\_one\_thing > this\_other\_thing &&
-
-    a\_third\_thing == a\_fourth\_thing &&
-
-    yet\_another && last\_one) {
-
-  ...
-
-}
+        if (this\_one\_thing > this\_other\_thing &&
+            a\_third\_thing == a\_fourth\_thing &&
+            yet\_another && last\_one) {
+          ...
+        }
 
 Note that when the code wraps in this example, both of the && logical
 AND operators are at the end of the line. This is more common in Google
@@ -1363,36 +1360,36 @@ Do not needlessly surround the return expression with parentheses.
 Use parentheses in return expr; only where you would use them in x =
 expr;.
 
-return result;                  // No parentheses in the simple case.
+::
 
-// Parentheses OK to make a complex expression more readable.
+        return result;                  // No parentheses in the simple case.
 
-return (some\_long\_condition &&
+        // Parentheses OK to make a complex expression more readable.
+        return (some\_long\_condition &&
+                another\_condition);
 
-        another\_condition);
+        return (value);                // You wouldn't write var = (value);
 
-return (value);                // You wouldn't write var = (value);
-
-return(result);                // return is not a function!
+        return(result);                // return is not a function!
 
 Variable and Array Initialization
 ---------------------------------
 
 Your choice of =, (), or {}.
 
-You may choose between =, (), and {}; the following are all correct:
+You may choose between =, (), and {}; the following are all correct::
 
-int x = 3;
+        int x = 3;
 
-int x(3);
+        int x(3);
 
-int x{3};
+        int x{3};
 
-string name = "Some Name";
+        string name = "Some Name";
 
-string name("Some Name");
+        string name("Some Name");
 
-string name{"Some Name"};
+        string name{"Some Name"};
 
 Be careful when using a braced initialization list {...} on a type with
 an std::initializer\_list constructor. A
@@ -1402,16 +1399,20 @@ default constructor if available. To force the
 non-std::initializer\_list constructor, use parentheses instead of
 braces.
 
-vector<int> v(100, 1);  // A vector of 100 1s.
+::
 
-vector<int> v{100, 1};  // A vector of 100, 1.
+        vector<int> v(100, 1);  // A vector of 100 1s.
+
+        vector<int> v{100, 1};  // A vector of 100, 1.
 
 Also, the brace form prevents narrowing of integral types. This can
 prevent some types of programming errors.
 
-int pi(3.14);  // OK -- pi == 3.
+::
 
-int pi{3.14};  // Compile error: narrowing conversion.
+        int pi(3.14);  // OK -- pi == 3.
+
+        int pi{3.14};  // Compile error: narrowing conversion.
 
 Preprocessor Directives
 -----------------------
@@ -1422,38 +1423,40 @@ the beginning of the line.
 Even when preprocessor directives are within the body of indented code,
 the directives should start at the beginning of the line.
 
-// Good - directives at beginning of line
+::
 
-  if (lopsided\_score) {
+        // Good - directives at beginning of line
 
-#if DISASTER\_PENDING      // Correct -- Starts at beginning of line
+          if (lopsided\_score) {
 
-    DropEverything();
+        #if DISASTER\_PENDING      // Correct -- Starts at beginning of line
 
-#if NOTIFY                   NotifyClient();
+            DropEverything();
 
-#endif /\* NOTIFY \*/
+        #if NOTIFY                   NotifyClient();
 
-#endif /\* DISASTER\_PENDING \*/
+        #endif /\* NOTIFY \*/
 
-    BackToNormal();
+        #endif /\* DISASTER\_PENDING \*/
 
-  }
+            BackToNormal();
 
-// Bad - indented directives
+          }
 
-  if (lopsided\_score) {
+        // Bad - indented directives
 
-    #if DISASTER\_PENDING  // Wrong!  The "#if" should be at beginning
-of line
+          if (lopsided\_score) {
 
-    DropEverything();
+            #if DISASTER\_PENDING  // Wrong!  The "#if" should be at beginning
+        of line
 
-    #endif                // Wrong!  Do not indent "#endif"
+            DropEverything();
 
-    BackToNormal();
+            #endif                // Wrong!  Do not indent "#endif"
 
-  }
+            BackToNormal();
+
+          }
 
 Class Format
 ------------
@@ -1464,37 +1467,37 @@ space.
 The basic format for a class declaration (lacking the comments,
 see `Class
 Comments <https://google-styleguide.googlecode.com/svn/trunk/cppguide.html#Class_Comments>`__ for
-a discussion of what comments are needed) is:
+a discussion of what comments are needed) is::
 
-class MyClass : public OtherClass {
+        class MyClass : public OtherClass {
 
-public:
+        public:
 
-  MyClass();  // Regular 2 space indent.
+          MyClass();  // Regular 2 space indent.
 
-  explicit MyClass(int var);
+          explicit MyClass(int var);
 
-  ~MyClass() {}
+          ~MyClass() {}
 
-  void SomeFunction();
+          void SomeFunction();
 
-  void SomeFunctionThatDoesNothing() {
+          void SomeFunctionThatDoesNothing() {
 
-  }
+          }
 
-  void set\_some\_var(int var) { some\_var\_ = var; }
+          void set\_some\_var(int var) { some\_var\_ = var; }
 
-  int some\_var() const { return some\_var\_; }
+          int some\_var() const { return some\_var\_; }
 
-private:
+        private:
 
-  bool SomeInternalFunction();
+          bool SomeInternalFunction();
 
-  int some\_var\_;
+          int some\_var\_;
 
-  int some\_other\_var\_;
+          int some\_other\_var\_;
 
-};
+        };
 
 Things to note:
 
@@ -1515,39 +1518,38 @@ Constructor Initializer Lists
 Constructor initializer lists can be all on one line or with subsequent
 lines indented four spaces.
 
-There are two acceptable formats for initializer lists:
+There are two acceptable formats for initializer lists::
 
-// When it all fits on one line:
+        // When it all fits on one line:
 
-MyClass::MyClass(int var) : some\_var\_(var), some\_other\_var\_(var +
-1)
+        MyClass::MyClass(int var) : some\_var\_(var), some\_other\_var\_(var + 1)
 
-{
+        {
 
-}
+        }
 
 or
 
-// When it requires multiple lines, indent 4 spaces, putting the colon
-on
+::
 
-// the first initializer line:
+        // When it requires multiple lines, indent 4 spaces, putting the colon on
+        // the first initializer line:
 
-MyClass::MyClass(int var)
+        MyClass::MyClass(int var)
 
-:some\_var\_(var)
+        :some\_var\_(var)
 
-,some\_other\_var\_(var + 1)
+        ,some\_other\_var\_(var + 1)
 
-{  // lined up
+        {  // lined up
 
-  ...
+          ...
 
-  DoSomething();
+          DoSomething();
 
-  ...
+          ...
 
-}
+        }
 
 Horizontal Whitespace
 ---------------------
@@ -1558,37 +1560,37 @@ whitespace at the end of a line.
 General
 ~~~~~~~
 
-void f(bool b) {  // Open braces should always have a space before them.
+::
 
-  ...
+        void f(bool b) {  // Open braces should always have a space before them.
 
-int i = 0;  // Semicolons usually have no space before them.
+          ...
 
-// Spaces inside braces for braced-init-list are optional.  If you use
-them,
+        int i = 0;  // Semicolons usually have no space before them.
 
-// put them on both sides!
+        // Spaces inside braces for braced-init-list are optional.  If you use them,
+        // put them on both sides!
 
-int x[] = { 0 };
+        int x[] = { 0 };
 
-int x[] = {0};
+        int x[] = {0};
 
-// Spaces around the colon in inheritance and initializer lists.
+        // Spaces around the colon in inheritance and initializer lists.
 
-class Foo : public Bar {
+        class Foo : public Bar {
 
- public:
+         public:
 
-  // For inline function implementations, put spaces between the braces
+          // For inline function implementations, put spaces between the braces
 
-  // and the implementation itself.
+          // and the implementation itself.
 
-  Foo(int b) : Bar(), baz\_(b) {}  // No spaces inside empty braces.
+          Foo(int b) : Bar(), baz\_(b) {}  // No spaces inside empty braces.
 
-  void Reset() { baz\_ = 0; }  // Spaces separating braces from
-implementation.
+          void Reset() { baz\_ = 0; }  // Spaces separating braces from
+        implementation.
 
-  ...
+          ...
 
 Adding trailing whitespace can cause extra work for others editing the
 same file, when they merge, as can removing existing trailing
@@ -1599,105 +1601,94 @@ already changing that line, or do it in a separate clean-up operation
 Loops and Conditionals
 ~~~~~~~~~~~~~~~~~~~~~~
 
-if (b) {          // Space after the keyword in conditions and loops.
+::
 
-} else {          // Spaces around else.
+        if (b) {          // Space after the keyword in conditions and loops.
 
-}
+        } else {          // Spaces around else.
 
-while (test) {}   // There is usually no space inside parentheses.
+        }
 
-switch (i) {
+        while (test) {}   // There is usually no space inside parentheses.
 
-for (int i = 0; i < 5; ++i) {
+        switch (i) {
 
-// Loops and conditions may have spaces inside parentheses, but this
+        for (int i = 0; i < 5; ++i) {
 
-// is rare.  Be consistent.
+        // Loops and conditions may have spaces inside parentheses, but this
 
-switch ( i ) {
+        // is rare.  Be consistent.
 
-if ( test ) {
+        switch ( i ) {
 
-for ( int i = 0; i < 5; ++i ) {
+        if ( test ) {
 
-// For loops always have a space after the semicolon.  They may have a
-space
+        for ( int i = 0; i < 5; ++i ) {
 
-// before the semicolon, but this is rare.
+        // For loops always have a space after the semicolon.  They may have a
+        space
 
-for ( ; i < 5 ; ++i) {
+        // before the semicolon, but this is rare.
 
-  ...
+        for ( ; i < 5 ; ++i) {
 
-// Range-based for loops always have a space before and after the colon.
+          ...
 
-for (auto x : counts) {
+        // Range-based for loops always have a space before and after the colon.
 
-  ...
+        for (auto x : counts) {
 
-}
+          ...
 
-switch (i) {
+        }
 
-  case 1:         // No space before colon in a switch case.
+        switch (i) {
 
-    ...
+          case 1:         // No space before colon in a switch case.
 
-  case 2:
+            ...
 
-    break;
+          case 2:
+
+            break;
 
 Operators
 ~~~~~~~~~
 
-// Assignment operators always have spaces around them.
+::
 
-x = 0;
+        // Assignment operators always have spaces around them.
+        x = 0;
 
-// Other binary operators usually have spaces around them, but it's
+        // Other binary operators usually have spaces around them, but it's
+        // OK to remove spaces around factors.  Parentheses should have no
+        // internal padding.
+        v = w \* x + y / z;
+        v = w\*x + y/z;
+        v = w \* (x + z);
 
-// OK to remove spaces around factors.  Parentheses should have no
-
-// internal padding.
-
-v = w \* x + y / z;
-
-v = w\*x + y/z;
-
-v = w \* (x + z);
-
-// No spaces separating unary operators and their arguments.
-
-x = -5;
-
-++x;
-
-if (x && !y)
-
-  ...
+        // No spaces separating unary operators and their arguments.
+        x = -5;
+        ++x;
+        if (x && !y)
+          ...
 
 Templates and Casts
 ~~~~~~~~~~~~~~~~~~~
 
-// No spaces inside the angle brackets (< and >), before
+::
 
-// <, or between >( in a cast
+        // No spaces inside the angle brackets (< and >), before
+        // <, or between >( in a cast
+        vector<string> x;
+        y = static\_cast<char\*>(x);
 
-vector<string> x;
+        // Spaces between type and pointer are OK, but be consistent.
+        vector<char \*> x;
+        set<list<string>> x;        // Permitted in C++11 code. bad bad code
+        set< list<string> > x;       // C++03 required a space in > >.
 
-y = static\_cast<char\*>(x);
-
-// Spaces between type and pointer are OK, but be consistent.
-
-vector<char \*> x;
-
-set<list<string>> x;        // Permitted in C++11 code. bad bad code
-
-set< list<string> > x;       // C++03 required a space in > >.
-
-// You may optionally use symmetric spacing in < <.
-
-set< list<string> > x;
+        // You may optionally use symmetric spacing in < <.
+        set< list<string> > x;
 
 .. |image0| image:: images/image00.gif
