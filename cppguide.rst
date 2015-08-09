@@ -190,9 +190,9 @@ not included in this guideline.
 Header files
 ============
 
-In general, every .cpp file should have an associated .h file. There are
-some common exceptions, such as unittests and small .cpp files
-containing just a main() function.
+In general, every ``.cpp`` file should have an associated ``.h`` file. There
+are some common exceptions, such as unittests and small ``.cpp`` files
+containing just a ``main()`` function.
 
 Correct use of header files can make a huge difference to the
 readability, size and performance of your code.
@@ -203,8 +203,8 @@ header files.
 Self-contained Headers
 ----------------------
 
-Header files should be self-contained and end in .h. Files that are
-meant for textual inclusion, but are not headers, should end in .inc.
+Header files should be self-contained and end in ``.h``. Files that are
+meant for textual inclusion, but are not headers, should end in ``.inc``.
 Separate-inl.h headers are disallowed.
 
 All header files should be self-contained. In other words, users and
@@ -217,20 +217,20 @@ There are rare cases where a file is not meant to be self-contained, but
 instead is meant to be textually included at a specific point in the
 code. Examples are files that need to be included multiple times or
 platform-specific extensions that essentially are part of other headers.
-Such files should use the file extension .inc.
+Such files should use the file extension ``.inc``.
 
-If a template or inline function is declared in a .h file, define it in
+If a template or inline function is declared in a ``.h`` file, define it in
 that same file. The definitions of these constructs must be included
-into every .cpp file that uses them, or the program may fail to link in
+into every ``.cpp`` file that uses them, or the program may fail to link in
 some build configurations. Do not move these definitions to
 separate-inl.h files.
 
 As an exception, a function template that is explicitly instantiated for
 all relevant sets of template arguments, or that is a private member of
-a class, may be defined in the only .cpp file that instantiates the
+a class, may be defined in the only ``.cpp`` file that instantiates the
 template.
 
-No code in inc files
+No code in inc files!
 
 The #define Guard
 -----------------
@@ -243,15 +243,17 @@ To guarantee uniqueness, they should be based on the full path in a
 project's source tree. For example, the file foo/src/bar/baz.h in
 project foo should have the following guard:
 
-#ifndef FOO\_BAR\_BAZ\_H\_
+:: 
 
-#define FOO\_BAR\_BAZ\_H\_
+        #ifndef FOO\_BAR\_BAZ\_H\_
 
-…
+        #define FOO\_BAR\_BAZ\_H\_
 
-#endif  // FOO\_BAR\_BAZ\_H\_
+        …
 
-XMOS uses #pragma once
+        #endif  // FOO\_BAR\_BAZ\_H\_
+
+XMOS uses ``#pragma once``
 
 --------------
 
@@ -293,7 +295,8 @@ project's source directory without use of UNIX directory shortcuts. (the
 current directory) or .. (the parent directory). For example,
 synapticon-awesome-project/src/base/logging.h should be included as:
 
-#include "base/logging.h"
+:: 
+        #include "base/logging.h"
 
 In dir/foo.cpp or dir/foo\_test.cpp, whose main purpose is to implement
 or test the stuff in dir2/foo2.h, order your includes as follows:
@@ -305,24 +308,24 @@ or test the stuff in dir2/foo2.h, order your includes as follows:
 #. C++ system files.
 
 For example, the includes in
-synapticon-awesome-project/src/foo/internal/fooserver.cpp might look
-like this:
+``synapticon-awesome-project/src/foo/internal/fooserver.cpp``
+ might look like this::
 
-#include "foo/server/fooserver.h"
+        #include "foo/server/fooserver.h"
 
-#include "base/basictypes.h"
+        #include "base/basictypes.h"
 
-#include "base/commandlineflags.h"
+        #include "base/commandlineflags.h"
 
-#include "foo/server/bar.h"
+        #include "foo/server/bar.h"
 
-#include <sys/types.h>
+        #include <sys/types.h>
 
-#include <unistd.h>
+        #include <unistd.h>
 
-#include <hash\_map>
+        #include <hash\_map>
 
-#include <vector>
+        #include <vector>
 
 Exception:
 
@@ -330,17 +333,17 @@ Sometimes, system-specific code needs conditional includes. Such code
 can put conditional includes after other includes. Of course, keep your
 system-specific code small and localized.
 
-Example:
+Example::
 
-#include "foo/public/fooserver.h"
+        #include "foo/public/fooserver.h"
 
-#include "base/port.h"  // For LANG\_CXX11.
+        #include "base/port.h"  // For LANG\_CXX11.
 
-#ifdef LANG\_CXX11
+        #ifdef LANG\_CXX11
 
-#include <initializer\_list>
+        #include <initializer\_list>
 
-#endif  // LANG\_CXX11
+        #endif  // LANG\_CXX11
 
 --------------
 
