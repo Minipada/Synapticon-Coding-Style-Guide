@@ -1,16 +1,11 @@
-.. raw:: html
 
-   <div>
+|image/image0.gif|
 
-|image0|
 
-.. raw:: html
 
-   </div>
-
-CODING GUIDE
-
-C & C++
+====================
+CODING GUIDE C & C++
+====================
 
 Version 1.0
 
@@ -34,6 +29,9 @@ Document Change Log
 --------------
 
 Table Of Content
+
+.. contents::
+
 
 `Document Change Log <#h.30j0zll>`__`         <#h.30j0zll>`__
 
