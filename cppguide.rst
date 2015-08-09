@@ -283,6 +283,7 @@ The typical .cpp file might have more complex detail, including the need
 to reference classes in other namespaces.
 
 ::
+
         #include "a.h"
 
         DEFINE\_bool(someflag, false, "dummy flag");
@@ -929,9 +930,11 @@ paren::
 
                                   argument3);
 
-Arguments may optionally all be placed on subsequent lines ``if (...) {``
+Arguments may optionally all be placed on subsequent lines
 
 ::
+
+        if (...) {
 
           ...
 
@@ -946,6 +949,7 @@ Arguments may optionally all be placed on subsequent lines ``if (...) {``
                         argument4);
 
           }
+        }
 
 Put multiple arguments on a single line to reduce the number of lines
 necessary for calling a function unless there is a specific readability
@@ -1127,14 +1131,13 @@ Braces are NOT(!) optional for single-statement loops.
 
 ::
 
+        /* NO */
         for (int i = 0; i < kSomeNumber; ++i)
-
           printf("I love you\\n");
 
+        /* Yes */
         for (int i = 0; i < kSomeNumber; ++i) {
-
           printf("I take it back\\n");
-
         }
 
 Empty loop bodies should use {} or continue, but not a single semicolon.
