@@ -86,7 +86,7 @@ code. Examples are files that need to be included multiple times or
 platform-specific extensions that essentially are part of other headers.
 Such files should use the file extension ``.inc``.
 
-If a template or inline function is declared in a ``.headers`` file, define it in
+If a template or inline function is declared in a ``.h`` file, define it in
 that same file. The definitions of these constructs must be included
 into every ``.cpp`` file that uses them, or the program may fail to link in
 some build configurations. Do not move these definitions to
@@ -117,8 +117,6 @@ project foo should have the following guard:
         …
         #endif  // FOO\_BAR\_BAZ\_H\_
 
-XMOS uses ``#pragma once``
-
 --------------
 
 Inline Functions
@@ -142,10 +140,6 @@ new; place new input-only parameters before the output parameters.
 This is not a hard-and-fast rule. Parameters that are both input and
 output (often classes/ structs) muddy the waters, and, as always,
 consistency with related functions may require you to bend the rule.
-
-XMOS: Need more rules for interfaces, ports and channels. Interfaces and
-channels come first. Ports come second. All of their arguments follow
-like described in the C/C++ guideline.
 
 Names and Order of Includes
 ---------------------------
