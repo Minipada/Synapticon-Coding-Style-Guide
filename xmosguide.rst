@@ -65,9 +65,19 @@ Naming
 Channels
 ---------------------------
 
-Channel names should start by ``c_``
+Channel instace names should start by ``c_``
 
 For example
 ::
 	
 	c_watchdog
+	
+Interfaces
+---------------------------
+
+Interface instance names should start by ``i_``
+
+For example
+::
+	
+	i_watchdog
