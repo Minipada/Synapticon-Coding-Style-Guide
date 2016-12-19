@@ -16,7 +16,7 @@
 <setting id="org.eclipse.cdt.core.formatter.insert_space_before_closing_paren_in_parenthesized_expression" value="do not insert"/>
 <setting id="org.eclipse.cdt.core.formatter.insert_space_after_opening_paren_in_exception_specification" value="do not insert"/>
 <setting id="org.eclipse.cdt.core.formatter.insert_space_after_comma_in_base_types" value="insert"/>
-<setting id="org.eclipse.cdt.core.formatter.indent_body_declarations_compare_to_access_specifier" value="false"/>
+<setting id="org.eclipse.cdt.core.formatter.indent_body_declarations_compare_to_access_specifier" value="true"/>
 <setting id="org.eclipse.cdt.core.formatter.insert_space_before_closing_paren_in_exception_specification" value="do not insert"/>
 <setting id="org.eclipse.cdt.core.formatter.insert_space_after_comma_in_template_arguments" value="insert"/>
 <setting id="org.eclipse.cdt.core.formatter.insert_space_before_opening_brace_in_block" value="insert"/>
