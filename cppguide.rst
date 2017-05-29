@@ -734,7 +734,7 @@ exceptions are allowed.
 Spaces vs. Tabs
 ---------------
 
-Use only spaces, and indent 2 spaces at a time.
+Use only spaces, and indent 4 spaces at a time.
 
 We use spaces for indentation. Do not use tabs in your code. You should
 set your editor to emit spaces when you hit the tab key.
@@ -877,7 +877,7 @@ personal preference, do not add the spaces.
 ::
 
         if (condition) {  // no spaces inside parentheses
-          ...  // 2 space indent.
+          ...  // 4 space indent.
         } else if (...) {  // The else goes on the same line as the closing brace.
           ...
         } else {
@@ -919,9 +919,9 @@ accompanying brace.
 ::
 
         if (condition)
-          DoSomething();  // 2 space indent.   // NOT ALLOWED!!! bitchy.
+          DoSomething();  // 4 space indent.   // NOT ALLOWED!!! bitchy.
         if (condition) {
-          DoSomething();  // 2 space indent.
+          DoSomething();  // 4 space indent.
         }
 
 However, if one part of an if-else statement uses curly braces, the
@@ -965,19 +965,19 @@ compiler will warn you if any values are not handled). If the default
 case should never execute, simply assert::
 
         switch (var) {
-          case 0: {  // 2 space indent
-            ...      // 4 space indent
-            break;
-          }
+            case 0: {    // 4 space indent
+                ...      // 4 space indent
+                break;
+            }
 
-          case 1: {
-            ...
-            break;
-          }
+            case 1: {
+                ...
+                break;
+            }
 
-          default: {
-            assert(false);
-          }
+            default: {
+                assert(false);
+            }
         }
 
 Braces are NOT(!) optional for single-statement loops.
