@@ -4,7 +4,7 @@
 
 
 ====================
-CODING GUIDE C & C++
+CODING GUIDE xC
 ====================
 
 Version 1.0
@@ -25,6 +25,8 @@ Document Change Log
 +-------------------------+-------------------------+-------------------------+
 | Fixed Layout            | Frank Jeschke           | 2015-07-08              |
 +-------------------------+-------------------------+-------------------------+
+| Fixed Language          | Thiago de Freitas       | 2017-07-24              |
++-------------------------+-------------------------+-------------------------+
 
 --------------
 
@@ -41,7 +43,7 @@ Content
 This document is the official ``XMOS coding guideline`` of Synapticon GmbH. All
 developments, which are done by Synapticon or are done by third party
 for Synapticon has to follow this coding guideline. This coding
-guideline covers the programming languages of C and C++.
+guideline covers the xC programming language.
 
 
 Header files
