@@ -20,7 +20,7 @@ BinPackArguments: 'false'
 BreakBeforeBinaryOperators: None
 BreakBeforeBraces: 'Allman'
 BreakBeforeTernaryOperators: 'false'
-BreakConstructorInitializersBeforeComma: 'false'
+BreakConstructorInitializersBeforeComma: 'true'
 ColumnLimit: '80'
 CommentPragmas: '4'
 ConstructorInitializerAllOnOneLineOrOnePerLine: 'false'
